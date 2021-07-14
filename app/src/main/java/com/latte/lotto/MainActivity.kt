@@ -1,24 +1,22 @@
 package com.latte.lotto
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import com.latte.lotto.databinding.ActivityMainBinding
-import com.latte.lotto.extract.ExtractActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mainBinding: ActivityMainBinding
+    private lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainBinding = DataBindingUtil.setContentView(this , R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
-        //번호 뽑기 화면이동
-        mainBinding.extractActivityButton.setOnClickListener {
-            val intent = Intent(applicationContext,ExtractActivity::class.java)
-            startActivity(intent)
-        }
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 }
