@@ -7,6 +7,15 @@
         android:layout_height="match_parent"
         tools:context=".MainFragment">
 
+        <TextView
+            android:text="로또왕"
+            android:gravity="center"
+            android:fontFamily="@font/bmeuljirottf"
+            android:textSize="80sp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
