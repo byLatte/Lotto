@@ -1,18 +1,18 @@
 package com.latte.lotto.extract
 
-import android.content.Intent
-import android.graphics.drawable.Drawable
-import android.nfc.Tag
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import com.latte.lotto.MainActivity
+import androidx.lifecycle.ViewModelProvider
 import com.latte.lotto.R
+import com.latte.lotto.database.NumberHistory
 import com.latte.lotto.databinding.FragmentExtractBinding
+import com.latte.lotto.history.NumberHistoryViewModel
+import java.util.*
 import kotlin.random.Random
 
 private const val TAG = "ExtractFragment"
@@ -21,7 +21,26 @@ class ExtractFragment : Fragment() {
 
     private lateinit var extractBinding: FragmentExtractBinding
     private lateinit var numberDataModel: MutableList<ExtractNumberModel>
+    private var callback: ExtractCallbacks? = null
 
+    private val numberHistoryViewModel: NumberHistoryViewModel by lazy{
+        ViewModelProvider(this).get(NumberHistoryViewModel::class.java)
+    }
+
+    interface ExtractCallbacks{
+        fun extractToMain()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as ExtractCallbacks
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +71,16 @@ class ExtractFragment : Fragment() {
             extractBinding.resultImageView4.setImageResource(numberDataModel[resultNumber[3]].numberRes)
             extractBinding.resultImageView5.setImageResource(numberDataModel[resultNumber[4]].numberRes)
             extractBinding.resultImageView6.setImageResource(numberDataModel[resultNumber[5]].numberRes)
+
+            var numberHistory = NumberHistory(
+                0,Date(),3,4,5,6,7,8
+            )
+
+            numberHistoryViewModel.addHistory(numberHistory)
         }
 
         extractBinding.mainActivityButton.setOnClickListener {
-            val intent = Intent(activity,MainActivity::class.java)
-            startActivity(intent)
+            callback?.extractToMain()
         }
         return extractBinding.root
     }

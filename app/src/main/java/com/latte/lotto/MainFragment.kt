@@ -20,7 +20,7 @@ class MainFragment : Fragment() {
 
     interface Callbacks{
         fun mainToExtract()
-        fun mainToRecord()
+        fun mainToHistory()
     }
 
     private var callbacks: Callbacks? = null
@@ -51,7 +51,7 @@ class MainFragment : Fragment() {
 //            it.findNavController().navigate(R.id.action_mainFragment_to_extractFragment)
         }
         mainBinding.recordActivityButton.setOnClickListener {
-            callbacks?.mainToRecord()
+            callbacks?.mainToHistory()
 //            it.findNavController().navigate(R.id.action_mainFragment_to_recordFragment)
         }
 

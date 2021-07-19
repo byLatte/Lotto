@@ -3,17 +3,16 @@ package com.latte.lotto
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.latte.lotto.extract.ExtractFragment
-import com.latte.lotto.record.RecordFragment
+import com.latte.lotto.history.NumberHistoryFragment
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), MainFragment.Callbacks {
+class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragment.ExtractCallbacks {
 
     private lateinit var mAdView : AdView
     private var backDouble: Boolean = false
@@ -61,8 +60,17 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks {
             .commit()
     }
 
-    override fun mainToRecord() {
-        val fragment = RecordFragment.newInstance()
+    override fun mainToHistory() {
+        val fragment = NumberHistoryFragment.newInstance()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainerView,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun extractToMain() {
+        val fragment = MainFragment.newInstance()
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragmentContainerView,fragment)

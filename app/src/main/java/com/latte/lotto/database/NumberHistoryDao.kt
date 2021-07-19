@@ -1,5 +1,6 @@
 package com.latte.lotto.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -8,7 +9,7 @@ import androidx.room.Query
 interface NumberHistoryDao {
 
     @Query("SELECT * FROM number_history")
-    fun getAll(): List<NumberHistory>
+    fun getAll(): LiveData<List<NumberHistory>>
 
     @Insert
     fun insert(numberHistory: NumberHistory)
