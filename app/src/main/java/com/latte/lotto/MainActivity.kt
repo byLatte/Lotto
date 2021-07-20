@@ -3,7 +3,9 @@ package com.latte.lotto
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -37,26 +39,12 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
         mAdView.loadAd(adRequest)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-//        if(backDouble){
-//            super.onBackPressed()
-//        }else{
-//            Toast.makeText(this,"뒤로 버튼을 한번 더 터치하시면 종료됩니다.",Toast.LENGTH_SHORT).show()
-//       }
-//
-//        backDouble = true
-//        Handler().postDelayed({
-//            backDouble = false
-//        },2000)
-    }
-
     override fun mainToExtract() {
         val fragment = ExtractFragment.newInstance()
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragmentContainerView,fragment)
-            .addToBackStack(null)
+            .addToBackStack("EXTRACT")
             .commit()
     }
 
@@ -71,6 +59,7 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
 
     override fun extractToMain() {
         val fragment = MainFragment.newInstance()
+        supportFragmentManager.popBackStack("EXTRACT",FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragmentContainerView,fragment)
