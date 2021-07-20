@@ -9,8 +9,4 @@ class NumberHistoryViewModel : ViewModel() {
     private val numberHistoryRepository = NumberHistoryRepository.get()
     val numberHistory = numberHistoryRepository.getNumberHistory()
 
-    fun addHistory(numberHistory: NumberHistory){
-        numberHistoryRepository.addNumberHistory(numberHistory)
-    }
-
 }

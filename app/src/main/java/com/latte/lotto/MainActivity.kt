@@ -37,18 +37,18 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
         mAdView.loadAd(adRequest)
     }
 
-    // fragment 에서 문제점 발생.. 수정필요.
     override fun onBackPressed() {
-        if(backDouble){
-            super.onBackPressed()
-        }else{
-            Toast.makeText(this,"뒤로 버튼을 한번 더 터치하시면 종료됩니다.",Toast.LENGTH_SHORT).show()
-       }
-
-        backDouble = true
-        Handler().postDelayed({
-            backDouble = false
-        },2000)
+        super.onBackPressed()
+//        if(backDouble){
+//            super.onBackPressed()
+//        }else{
+//            Toast.makeText(this,"뒤로 버튼을 한번 더 터치하시면 종료됩니다.",Toast.LENGTH_SHORT).show()
+//       }
+//
+//        backDouble = true
+//        Handler().postDelayed({
+//            backDouble = false
+//        },2000)
     }
 
     override fun mainToExtract() {

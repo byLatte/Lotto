@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface NumberHistoryDao {
 
-    @Query("SELECT * FROM number_history ORDER BY regDt DESC")
+    @Query("SELECT * FROM number_history ORDER BY reg_dt DESC")
     fun getAll(): LiveData<List<NumberHistory>>
 
     @Insert

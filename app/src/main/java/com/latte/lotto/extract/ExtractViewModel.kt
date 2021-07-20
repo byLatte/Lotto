@@ -30,7 +30,7 @@ class ExtractViewModel : ViewModel() {
         var numberHistory = NumberHistory(
             0,Date(),resultNumber[0],resultNumber[1],resultNumber[2],resultNumber[3],resultNumber[4],resultNumber[5],
         )
-        addHistory(numberHistory)
+        addNumberHistory(numberHistory)
 
         val resIdList = mutableListOf<Int>()
         for(i in resultNumber){
@@ -39,7 +39,7 @@ class ExtractViewModel : ViewModel() {
         return resIdList
     }
 
-    fun addHistory(numberHistory: NumberHistory){
+    private fun addNumberHistory(numberHistory: NumberHistory){
         numberHistoryRepository.addNumberHistory(numberHistory)
     }
 

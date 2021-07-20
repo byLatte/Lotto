@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="이번주 1등은 \n 당신 입니다."
-        android:textSize="50sp"
+        android:textSize="60sp"
         android:fontFamily="@font/bmeuljirottf"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"

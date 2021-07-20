@@ -3,10 +3,16 @@ package com.latte.lotto.history
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.latte.lotto.NumberModel
 import com.latte.lotto.R
 import com.latte.lotto.database.NumberHistory
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.reflect.typeOf
 
 class NumberHistoryRecyclerAdapter(val numbers: List<NumberHistory>) : RecyclerView.Adapter<NumberHistoryRecyclerAdapter.ViewHolder>(){
 
@@ -22,10 +28,28 @@ class NumberHistoryRecyclerAdapter(val numbers: List<NumberHistory>) : RecyclerV
     override fun getItemCount(): Int = numbers.size
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view){
+        private val numberModel: NumberModel = NumberModel.get()
+        private val numberData: MutableList<Int> = numberModel.getNumberDataModel()
 
         fun bindItem(number: NumberHistory){
             val itemView = view.findViewById<TextView>(R.id.date_text_view)
-            itemView.text = number.regDt.toString()
+            val historyNumber1 = view.findViewById<ImageView>(R.id.history_image_view_1)
+            val historyNumber2 = view.findViewById<ImageView>(R.id.history_image_view_2)
+            val historyNumber3 = view.findViewById<ImageView>(R.id.history_image_view_3)
+            val historyNumber4 = view.findViewById<ImageView>(R.id.history_image_view_4)
+            val historyNumber5 = view.findViewById<ImageView>(R.id.history_image_view_5)
+            val historyNumber6 = view.findViewById<ImageView>(R.id.history_image_view_6)
+            historyNumber1.setImageResource(numberData[number.number1])
+            historyNumber2.setImageResource(numberData[number.number2])
+            historyNumber3.setImageResource(numberData[number.number3])
+            historyNumber4.setImageResource(numberData[number.number4])
+            historyNumber5.setImageResource(numberData[number.number5])
+            historyNumber6.setImageResource(numberData[number.number6])
+
+            val date = number.regDt
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            itemView.text = dateFormat.format(date).toString()
+
         }
     }
 
