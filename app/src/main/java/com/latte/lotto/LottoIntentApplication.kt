@@ -10,6 +10,7 @@ class LottoIntentApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        NumberModel.init() //번호 데이터 정보.
         NumberHistoryRepository.init(this)
     }
 }

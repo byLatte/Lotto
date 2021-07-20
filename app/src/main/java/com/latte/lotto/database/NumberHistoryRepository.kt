@@ -29,6 +29,14 @@ class NumberHistoryRepository private constructor(context: Context){
         }
     }
 
+    fun removeNumberHistory(numberHistory: NumberHistory){
+        executor.execute {
+            Log.d(TAG,"HISTORY DELETE")
+            numberHistoryDao.delete(numberHistory)
+        }
+    }
+
+
     fun getNumberHistory() : LiveData<List<NumberHistory>> = numberHistoryDao.getAll()
 
     companion object{
