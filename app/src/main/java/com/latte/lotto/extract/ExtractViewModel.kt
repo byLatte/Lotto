@@ -18,7 +18,7 @@ class ExtractViewModel : ViewModel() {
 
         // 번호추출
         while(resultNumber.size < 6){
-            val extractNumber = Random.nextInt(0,44)
+            val extractNumber = Random.nextInt(0,45)
             if(!resultNumber.contains(extractNumber)){
                 resultNumber.add(extractNumber)
             }
