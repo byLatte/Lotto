@@ -2,6 +2,8 @@ package com.latte.lotto.extract
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,6 +32,8 @@ class ExtractFragment : Fragment() {
 
     interface Callbacks{
         fun extractToMain()
+        fun extractDialogShow()
+        fun extractDialogDestroy()
     }
 
     override fun onAttach(context: Context) {
@@ -55,7 +59,10 @@ class ExtractFragment : Fragment() {
         extractBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_extract,container,false)
 
         extractBinding.extractButton.setOnClickListener {
-
+            callback?.extractDialogShow()
+            Handler(Looper.getMainLooper()).postDelayed({
+                callback?.extractDialogDestroy()
+            },3000)
             val resIdList =extractViewModel.extractNumber()
 
             extractBinding.resultImageView1.setImageResource(resIdList[0])
@@ -72,7 +79,6 @@ class ExtractFragment : Fragment() {
         }
         return extractBinding.root
     }
-
 
     companion object{
         fun newInstance():ExtractFragment = ExtractFragment()

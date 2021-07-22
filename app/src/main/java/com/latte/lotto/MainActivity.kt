@@ -10,6 +10,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.latte.lotto.extract.ExtractFragment
+import com.latte.lotto.extract.ExtractLoadingDialog
 import com.latte.lotto.history.NumberHistoryFragment
 import com.latte.lotto.history.NumberHistoryRemoveDialog
 
@@ -68,14 +69,24 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
             .commit()
     }
 
+    override fun extractDialogShow() {
+        ExtractLoadingDialog().show(supportFragmentManager,TAG)
+    }
+
+    override fun extractDialogDestroy() {
+        Log.d(TAG,"Dialog Destroy")
+        TODO("dialog destroy error ")
+//        ExtractLoadingDialog().dismiss()
+    }
+
     override fun removeDialog() {
         NumberHistoryRemoveDialog().show(supportFragmentManager,TAG)
     }
 
     //main fragment로 변경
     override fun extractToMain() {toMainFragment("EXTRACT")}
-
     override fun historyToMain() {toMainFragment("HISTORY")}
+
 
 
 }
