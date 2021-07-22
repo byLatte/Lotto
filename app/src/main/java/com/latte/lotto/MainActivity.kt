@@ -11,10 +11,11 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.latte.lotto.extract.ExtractFragment
 import com.latte.lotto.history.NumberHistoryFragment
+import com.latte.lotto.history.NumberHistoryRemoveDialog
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragment.ExtractCallbacks {
+class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragment.Callbacks, NumberHistoryFragment.Callbacks {
 
     private lateinit var mAdView : AdView
     private var backDouble: Boolean = false
@@ -39,6 +40,16 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
         mAdView.loadAd(adRequest)
     }
 
+    private fun toMainFragment(fragmentName: String){
+        val fragment = MainFragment.newInstance()
+        supportFragmentManager.popBackStack(fragmentName,FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainerView,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     override fun mainToExtract() {
         val fragment = ExtractFragment.newInstance()
         supportFragmentManager
@@ -53,19 +64,18 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragmentContainerView,fragment)
-            .addToBackStack(null)
+            .addToBackStack("HISTORY")
             .commit()
     }
 
-    override fun extractToMain() {
-        val fragment = MainFragment.newInstance()
-        supportFragmentManager.popBackStack("EXTRACT",FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragmentContainerView,fragment)
-            .addToBackStack(null)
-            .commit()
+    override fun removeDialog() {
+        NumberHistoryRemoveDialog().show(supportFragmentManager,TAG)
     }
+
+    //main fragment로 변경
+    override fun extractToMain() {toMainFragment("EXTRACT")}
+
+    override fun historyToMain() {toMainFragment("HISTORY")}
 
 
 }

@@ -23,8 +23,6 @@ class MainFragment : Fragment() {
     private lateinit var mainBinding: FragmentMainBinding
     private lateinit var backPressedCallback: OnBackPressedCallback
 
-    private lateinit var fragmentContext: Context
-
     private var isDouble = false
 
     interface Callbacks{

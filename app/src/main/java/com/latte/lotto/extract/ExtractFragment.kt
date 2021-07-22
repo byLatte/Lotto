@@ -19,7 +19,7 @@ class ExtractFragment : Fragment() {
 
     private lateinit var extractBinding: FragmentExtractBinding
 
-    private var callback: ExtractCallbacks? = null
+    private var callback: Callbacks? = null
 
     private val extractViewModel: ExtractViewModel by lazy{
         ViewModelProvider(this).get(ExtractViewModel::class.java)
@@ -28,13 +28,13 @@ class ExtractFragment : Fragment() {
         ViewModelProvider(this).get(NumberHistoryViewModel::class.java)
     }
 
-    interface ExtractCallbacks{
+    interface Callbacks{
         fun extractToMain()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        callback = context as ExtractCallbacks
+        callback = context as Callbacks
     }
 
     override fun onDetach() {

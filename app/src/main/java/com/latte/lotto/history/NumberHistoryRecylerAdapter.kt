@@ -1,18 +1,23 @@
 package com.latte.lotto.history
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.latte.lotto.NumberModel
 import com.latte.lotto.R
 import com.latte.lotto.database.NumberHistory
+import com.latte.lotto.database.NumberHistoryRepository
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.reflect.typeOf
+
+private const val TAG = "RecyclerAdapter"
 
 class NumberHistoryRecyclerAdapter(val numbers: List<NumberHistory>) : RecyclerView.Adapter<NumberHistoryRecyclerAdapter.ViewHolder>(){
 
@@ -28,8 +33,12 @@ class NumberHistoryRecyclerAdapter(val numbers: List<NumberHistory>) : RecyclerV
     override fun getItemCount(): Int = numbers.size
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view){
+
+        //번호 Res 정보
         private val numberModel: NumberModel = NumberModel.get()
         private val numberData: MutableList<Int> = numberModel.getNumberDataModel()
+
+        private val numberHistoryRepository = NumberHistoryRepository.get()
 
         fun bindItem(number: NumberHistory){
             val itemView = view.findViewById<TextView>(R.id.date_text_view)
@@ -50,8 +59,10 @@ class NumberHistoryRecyclerAdapter(val numbers: List<NumberHistory>) : RecyclerV
             val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             itemView.text = dateFormat.format(date).toString()
 
+            val removeImageView = view.findViewById<ImageView>(R.id.history_remove_image_view)
+            removeImageView.setOnClickListener{
+                numberHistoryRepository.deleteNumberHistory(number)
+            }
         }
     }
-
-
 }

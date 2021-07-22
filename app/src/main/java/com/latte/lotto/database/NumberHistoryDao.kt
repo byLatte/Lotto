@@ -17,4 +17,7 @@ interface NumberHistoryDao {
 
     @Delete
     fun delete(numberHistory: NumberHistory)
+
+    @Query("DELETE FROM number_history")
+    fun deleteAll()
 }

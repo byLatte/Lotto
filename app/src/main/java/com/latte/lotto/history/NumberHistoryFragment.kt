@@ -1,11 +1,15 @@
 package com.latte.lotto.history
 
+import android.app.AlertDialog
+import android.app.ProgressDialog.show
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,10 +24,26 @@ class NumberHistoryFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var adapter : NumberHistoryRecyclerAdapter? = NumberHistoryRecyclerAdapter(emptyList())
 
+    private var callback : Callbacks?= null
+
+    interface Callbacks {
+        fun historyToMain()
+        fun removeDialog()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as Callbacks
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+    }
+
     private val numberHistoryViewModel: NumberHistoryViewModel by lazy{
         ViewModelProvider(this).get(NumberHistoryViewModel::class.java)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +58,13 @@ class NumberHistoryFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
+        binding.mainActivityButton.setOnClickListener {
+            callback?.historyToMain()
+        }
+        //전체삭제
+        binding.historyRemoveButton.setOnClickListener {
+            callback?.removeDialog()
+        }
         return binding.root
     }
 

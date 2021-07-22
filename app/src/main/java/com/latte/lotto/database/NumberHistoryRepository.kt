@@ -29,10 +29,16 @@ class NumberHistoryRepository private constructor(context: Context){
         }
     }
 
-    fun removeNumberHistory(numberHistory: NumberHistory){
+    fun deleteNumberHistory(numberHistory: NumberHistory){
         executor.execute {
             Log.d(TAG,"HISTORY DELETE")
             numberHistoryDao.delete(numberHistory)
+        }
+    }
+
+    fun deleteAll(){
+        executor.execute {
+            numberHistoryDao.deleteAll()
         }
     }
 
