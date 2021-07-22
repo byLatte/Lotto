@@ -1,15 +1,14 @@
 package com.latte.lotto.history
 
-import android.app.AlertDialog
-import android.app.ProgressDialog.show
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.latte.lotto.R
 import com.latte.lotto.database.NumberHistory
 import com.latte.lotto.databinding.FragmentNumberHistoryBinding
+
+private const val TAG = "NumberHistoryFragment"
 
 class NumberHistoryFragment : Fragment() {
 
@@ -82,6 +83,12 @@ class NumberHistoryFragment : Fragment() {
 
     private fun updateUI(numbers: List<NumberHistory>){
         adapter = NumberHistoryRecyclerAdapter(numbers)
+        if(adapter?.itemCount!! > 0) {
+            binding.emptyTextView.visibility = View.INVISIBLE
+        }else {
+            binding.emptyTextView.visibility = View.VISIBLE
+        }
+
         recyclerView.adapter = adapter
     }
 
