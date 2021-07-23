@@ -1,11 +1,12 @@
 package com.latte.lotto.extract
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.latte.lotto.R
+
+private const val TAG = "ExtractLoadingDialog"
 
 class ExtractLoadingDialog : DialogFragment() {
 
@@ -17,5 +18,4 @@ class ExtractLoadingDialog : DialogFragment() {
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
-
 }

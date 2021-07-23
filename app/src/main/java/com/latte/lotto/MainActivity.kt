@@ -3,7 +3,10 @@ package com.latte.lotto
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.ads.AdRequest
@@ -19,7 +22,6 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragment.Callbacks, NumberHistoryFragment.Callbacks {
 
     private lateinit var mAdView : AdView
-    private var backDouble: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,14 +71,13 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
             .commit()
     }
 
+    private val dialog = ExtractLoadingDialog()
     override fun extractDialogShow() {
-        ExtractLoadingDialog().show(supportFragmentManager,TAG)
+        dialog.show(supportFragmentManager,TAG)
     }
 
-    override fun extractDialogDestroy() {
-        Log.d(TAG,"Dialog Destroy")
-        TODO("dialog destroy error ")
-//        ExtractLoadingDialog().dismiss()
+    override fun extractDialogDismiss() {
+        dialog.dismiss()
     }
 
     override fun removeDialog() {

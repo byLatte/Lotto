@@ -17,7 +17,7 @@ import com.latte.lotto.history.NumberHistoryViewModel
 
 private const val TAG = "ExtractFragment"
 
-class ExtractFragment : Fragment() {
+class ExtractFragment : Fragment(){
 
     private lateinit var extractBinding: FragmentExtractBinding
 
@@ -33,12 +33,13 @@ class ExtractFragment : Fragment() {
     interface Callbacks{
         fun extractToMain()
         fun extractDialogShow()
-        fun extractDialogDestroy()
+        fun extractDialogDismiss()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callback = context as Callbacks
+        Log.d(TAG, "extrc Fragment Attach")
     }
 
     override fun onDetach() {
@@ -59,10 +60,7 @@ class ExtractFragment : Fragment() {
         extractBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_extract,container,false)
 
         extractBinding.extractButton.setOnClickListener {
-            callback?.extractDialogShow()
-            Handler(Looper.getMainLooper()).postDelayed({
-                callback?.extractDialogDestroy()
-            },3000)
+            resultImageViewVisible(false)
             val resIdList =extractViewModel.extractNumber()
 
             extractBinding.resultImageView1.setImageResource(resIdList[0])
@@ -72,6 +70,11 @@ class ExtractFragment : Fragment() {
             extractBinding.resultImageView5.setImageResource(resIdList[4])
             extractBinding.resultImageView6.setImageResource(resIdList[5])
 
+            callback?.extractDialogShow()
+            Handler(Looper.getMainLooper()).postDelayed({
+                callback?.extractDialogDismiss()
+                resultImageViewVisible(true)
+            },3000)
         }
 
         extractBinding.mainActivityButton.setOnClickListener {
@@ -80,7 +83,23 @@ class ExtractFragment : Fragment() {
         return extractBinding.root
     }
 
+    // 번호 결과 보이기/숨기기
+    private fun resultImageViewVisible(visible: Boolean){
+        val visibleValue = if(visible){
+            View.VISIBLE
+        }else{
+            View.INVISIBLE
+        }
+        extractBinding.resultImageView1.visibility = visibleValue
+        extractBinding.resultImageView2.visibility = visibleValue
+        extractBinding.resultImageView3.visibility = visibleValue
+        extractBinding.resultImageView4.visibility = visibleValue
+        extractBinding.resultImageView5.visibility = visibleValue
+        extractBinding.resultImageView6.visibility = visibleValue
+    }
+
     companion object{
         fun newInstance():ExtractFragment = ExtractFragment()
     }
+
 }
