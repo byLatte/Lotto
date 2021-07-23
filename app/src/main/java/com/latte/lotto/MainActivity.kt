@@ -2,12 +2,6 @@ package com.latte.lotto
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView

@@ -3,7 +3,6 @@ package com.latte.lotto.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import java.util.*
 
 @Entity(tableName = "number_history")

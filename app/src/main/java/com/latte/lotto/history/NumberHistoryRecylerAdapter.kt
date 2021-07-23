@@ -1,21 +1,16 @@
 package com.latte.lotto.history
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.latte.lotto.NumberModel
 import com.latte.lotto.R
 import com.latte.lotto.database.NumberHistory
 import com.latte.lotto.database.NumberHistoryRepository
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.reflect.typeOf
 
 private const val TAG = "RecyclerAdapter"
 
