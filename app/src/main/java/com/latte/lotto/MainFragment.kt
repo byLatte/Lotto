@@ -13,6 +13,9 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import com.latte.lotto.databinding.FragmentMainBinding
+import com.latte.lotto.extract.ExtractFragment
+import com.latte.lotto.history.NumberHistoryFragment
+import com.latte.lotto.win.WinFragment
 
 private const val TAG = "MainFragment"
 
@@ -23,13 +26,6 @@ class MainFragment : Fragment() {
 
     private var isDouble = false
 
-    interface Callbacks{
-        fun mainToExtract()
-        fun mainToHistory()
-    }
-
-    private var callbacks: Callbacks? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG,"Main Fragment")
@@ -37,7 +33,6 @@ class MainFragment : Fragment() {
     //Context 객체 참조를 callback 속성에 저장
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        callbacks = context as Callbacks
         backPressedCallback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
 
@@ -57,7 +52,6 @@ class MainFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        callbacks = null
     }
 
     override fun onCreateView(
@@ -66,20 +60,31 @@ class MainFragment : Fragment() {
     ): View? {
         // fragment binding
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container,false)
+        val main = activity as MainActivity
 
+        // 추출하기
         mainBinding.extractActivityButton.setOnClickListener {
-            callbacks?.mainToExtract()
+            main.replaceFragment(ExtractFragment.newInstance())
         }
+        // 기록보기
         mainBinding.recordActivityButton.setOnClickListener {
-            callbacks?.mainToHistory()
+            main.replaceFragment(NumberHistoryFragment.newInstance())
         }
+        // 당첨번호이력
+        mainBinding.winHistoryButton.setOnClickListener {
+            main.replaceFragment(WinFragment.newInstance())
+        }
+
 
         return mainBinding.root
     }
 
     companion object{
-        fun newInstance(): MainFragment{
-            return MainFragment()
+        private var INSTANCE : MainFragment ?= null
+        fun newInstance() : MainFragment {
+            if(INSTANCE == null) INSTANCE = MainFragment()
+
+            return INSTANCE as MainFragment
         }
 
     }

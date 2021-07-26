@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.latte.lotto.MainActivity
 import com.latte.lotto.R
 import com.latte.lotto.database.NumberHistory
 import com.latte.lotto.databinding.FragmentNumberHistoryBinding
@@ -28,7 +28,6 @@ class NumberHistoryFragment : Fragment() {
     private var callback : Callbacks?= null
 
     interface Callbacks {
-        fun historyToMain()
         fun removeDialog()
     }
 
@@ -59,8 +58,10 @@ class NumberHistoryFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
+        val main = activity as MainActivity
+
         binding.mainActivityButton.setOnClickListener {
-            callback?.historyToMain()
+            main.toMainFragment(NumberHistoryFragment.toString())
         }
         //전체삭제
         binding.historyRemoveButton.setOnClickListener {
@@ -93,6 +94,11 @@ class NumberHistoryFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): NumberHistoryFragment = NumberHistoryFragment()
+        private var INSTANCE : NumberHistoryFragment?= null
+        fun newInstance() : NumberHistoryFragment {
+            if(INSTANCE == null) INSTANCE = NumberHistoryFragment()
+
+            return INSTANCE as NumberHistoryFragment
+        }
     }
 }

@@ -11,9 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.latte.lotto.MainActivity
 import com.latte.lotto.R
 import com.latte.lotto.databinding.FragmentExtractBinding
-import com.latte.lotto.history.NumberHistoryViewModel
+import com.latte.lotto.history.NumberHistoryFragment
 
 private const val TAG = "ExtractFragment"
 
@@ -26,12 +27,11 @@ class ExtractFragment : Fragment(){
     private val extractViewModel: ExtractViewModel by lazy{
         ViewModelProvider(this).get(ExtractViewModel::class.java)
     }
-    private val numberHistoryViewModel: NumberHistoryViewModel by lazy{
-        ViewModelProvider(this).get(NumberHistoryViewModel::class.java)
-    }
+//    private val numberHistoryViewModel: NumberHistoryViewModel by lazy{
+//        ViewModelProvider(this).get(NumberHistoryViewModel::class.java)
+//    }
 
     interface Callbacks{
-        fun extractToMain()
         fun extractDialogShow()
         fun extractDialogDismiss()
     }
@@ -76,9 +76,9 @@ class ExtractFragment : Fragment(){
                 resultImageViewVisible(true)
             },3000)
         }
-
+        val main = activity as MainActivity
         extractBinding.mainActivityButton.setOnClickListener {
-            callback?.extractToMain()
+            main.toMainFragment(NumberHistoryFragment.toString())
         }
         return extractBinding.root
     }
@@ -99,7 +99,12 @@ class ExtractFragment : Fragment(){
     }
 
     companion object{
-        fun newInstance():ExtractFragment = ExtractFragment()
+        private var INSTANCE : ExtractFragment ?= null
+        fun newInstance() : ExtractFragment {
+            if(INSTANCE == null) INSTANCE = ExtractFragment()
+
+            return INSTANCE as ExtractFragment
+        }
     }
 
 }

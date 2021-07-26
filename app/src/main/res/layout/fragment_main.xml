@@ -11,37 +11,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/main_title"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintBottom_toTopOf="@+id/button_group"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/button_group"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="50dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <Button
-                android:id="@+id/extract_activity_button"
+            >
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_style"
-                android:text="1등번호뽑기" />
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                >
+                <Button
+                    android:id="@+id/extract_activity_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_style"
+                    android:text="1등번호뽑기" />
 
-            <Button
-                android:id="@+id/record_activity_button"
+                <Button
+                    android:id="@+id/record_activity_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_style"
+                    android:text="기록보기" />
+                />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_style"
-                android:text="기록보기" />
-            />
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/win_history_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_style"
+                    android:text="당첨번호 이력보기" />
+            </LinearLayout>
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

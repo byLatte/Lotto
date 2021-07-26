@@ -2,6 +2,7 @@ package com.latte.lotto
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -13,9 +14,10 @@ import com.latte.lotto.history.NumberHistoryRemoveDialog
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragment.Callbacks, NumberHistoryFragment.Callbacks {
+class MainActivity : AppCompatActivity(), ExtractFragment.Callbacks, NumberHistoryFragment.Callbacks {
 
     private lateinit var mAdView : AdView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,34 +39,6 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
         mAdView.loadAd(adRequest)
     }
 
-    private fun toMainFragment(fragmentName: String){
-        val fragment = MainFragment.newInstance()
-        supportFragmentManager.popBackStack(fragmentName,FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragmentContainerView,fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    override fun mainToExtract() {
-        val fragment = ExtractFragment.newInstance()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragmentContainerView,fragment)
-            .addToBackStack("EXTRACT")
-            .commit()
-    }
-
-    override fun mainToHistory() {
-        val fragment = NumberHistoryFragment.newInstance()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragmentContainerView,fragment)
-            .addToBackStack("HISTORY")
-            .commit()
-    }
-
     private val dialog = ExtractLoadingDialog()
     override fun extractDialogShow() {
         dialog.show(supportFragmentManager,TAG)
@@ -78,10 +52,23 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks, ExtractFragmen
         NumberHistoryRemoveDialog().show(supportFragmentManager,TAG)
     }
 
-    //main fragment로 변경
-    override fun extractToMain() {toMainFragment("EXTRACT")}
-    override fun historyToMain() {toMainFragment("HISTORY")}
+    //프래그먼트 변경
+    fun replaceFragment(fragment: Fragment){
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainerView,fragment)
+            .addToBackStack(fragment.toString())
+            .commit()
+    }
 
-
-
+    // 메인으로 복귀
+    fun toMainFragment(fragmentName: String){
+        val fragment = MainFragment.newInstance()
+        supportFragmentManager.popBackStack(fragmentName,FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainerView,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 }
