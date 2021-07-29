@@ -33,11 +33,6 @@ class WinFragment : Fragment() {
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_win,container,false)
         val main = activity as MainActivity
 
-        val curDrwNo = winViewModel.curDrwNo()
-
-        binding.textView.text = curDrwNo.toString()+" 회차"
-
-
         binding.mainActivityButton.setOnClickListener {
             main.toMainFragment(WinFragment.toString())
         }
