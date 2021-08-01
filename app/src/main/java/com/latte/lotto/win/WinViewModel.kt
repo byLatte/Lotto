@@ -2,6 +2,8 @@ package com.latte.lotto.win
 
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,30 +19,31 @@ class WinViewModel : ViewModel() {
     // 기준데이터 21시 이후 1회차 적용
     private val stanDrwNo: Int = 973
     private val stanDate = "2021-07-24 21:00:00"
-    private var curDrwNo: Int = 0
     private val winApi = WinApi.create()
 
-    fun getWinInfo(){
-        winApi.fetchData().enqueue(object : Callback<WinItem>{
+    fun getWinInfo(drwNo: Int): LiveData<WinItem>{
+        val respLiveData: MutableLiveData<WinItem> = MutableLiveData()
+        winApi.getWinInfo(drwNo).enqueue(object: Callback<WinItem>{
             override fun onResponse(call: Call<WinItem>, response: Response<WinItem>) {
-                Log.d(TAG,"SUCCESS : ${response.body()}")
+                respLiveData.value = response.body()
             }
 
             override fun onFailure(call: Call<WinItem>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d(TAG,"API Failure : $t")
             }
         })
+        return respLiveData
     }
 
 //    // 최근 회차 구하기
-    fun getCurDrwNo(){
+    fun getCurDrwNo(): Int{
         val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         val cDate: Date = Date()
         val sDate: Date = dateFormat.parse(stanDate)
         val diff: Long = cDate.time - sDate.time
         val nextNo: Long = (diff / (86400*1000*7))
 
-        curDrwNo = stanDrwNo+nextNo.toInt()
+        return stanDrwNo+nextNo.toInt()
     }
 
 }

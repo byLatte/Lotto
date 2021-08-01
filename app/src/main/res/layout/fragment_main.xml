@@ -60,7 +60,7 @@
                     android:layout_marginLeft="0dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_style"
-                    android:text="당첨번호 이력보기" />
+                    android:text="회차별 당첨번호 확인" />
             </LinearLayout>
         </LinearLayout>
 
